@@ -37,9 +37,7 @@ $(function() {
      */
     OCTOPRINT_VIEWMODELS.push({
         construct: CarscxthemeViewModel,
-        // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: [ /* "loginStateViewModel", "settingsViewModel" */ ],
-        // Elements to bind to, e.g. #settings_plugin_carscxTheme, #tab_plugin_carscxTheme, ...
         elements: [ /* ... */ ]
     });
 });
