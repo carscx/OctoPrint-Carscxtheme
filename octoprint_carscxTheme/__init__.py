@@ -1,46 +1,109 @@
 # coding=utf-8
 from __future__ import absolute_import
-
 import octoprint.plugin
+import time
 
-class CarscxthemePlugin(octoprint.plugin.SettingsPlugin,
-                        octoprint.plugin.AssetPlugin,
-                        octoprint.plugin.TemplatePlugin):
-    def get_settings_defaults(self):
-        return {}
+
+class CarscxThemePlugin(octoprint.plugin.StartupPlugin,
+                     octoprint.plugin.AssetPlugin,
+                     octoprint.plugin.SettingsPlugin,
+                     octoprint.plugin.TemplatePlugin):
+
+    def on_after_startup(self):
+        self._logger.info("CarscxTheme initialized.")
 
     def get_assets(self):
-        return {
-            "js": ["js/carscxTheme.js"],
-            "css": ["css/carscxTheme.css", "css/customlogin.css"],  # Añadir el archivo CSS de inicio de sesión
-        }
+        return dict(
+            less=["less/base.less"],
+            css=["dist/carscxTheme.min.css", "css/includes.css"],
+            js=["dist/carscxTheme.min.js"]
+        )
+
+    def get_settings_defaults(self):
+        return dict(
+            enabled=True,
+            enableCustomization=False,
+            theme='discorded',
+            color=[dict(
+                selector='.navbar-inner',
+                rule="background",
+                value="#2f3136",
+                enabled=False,
+                deletable=False)],
+            customRules=[
+                dict(
+                    selector='.navbar-inner',
+                    rule="background-color",
+                    value="#2f3136",
+                    enabled=False),
+                dict(
+                    selector='.accordion',
+                    rule="background-color",
+                    value="#2f3136",
+                    enabled=False)
+            ],
+            tabs=dict(
+                enableIcons=False,
+                icons=[
+                    dict(
+                        domId="#temp_link",
+                        enabled=True,
+                        faIcon="fa fa-line-chart"
+                    ),
+                    dict(
+                        domId="#control_link",
+                        enabled=True,
+                        faIcon="fa fa-gamepad",
+                    ),
+                    dict(
+                        domId="#gcode_link",
+                        enabled=True,
+                        faIcon="fa fa-object-ungroup"
+                    ),
+                    dict(
+                        domId="#term_link",
+                        enabled=True,
+                        faIcon="fa fa-terminal"
+                    )],
+            )
+        )
+
+   # def on_settings_save(self, data):
+   #     self._logger.log(data)
+   #     octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
 
     def get_template_configs(self):
         return [
-            dict(type="login", template="customlogin_login.jinja2", custom_bindings=False)
+            dict(type="settings", custom_bindings=True)
         ]
 
     def get_update_information(self):
-        return {
-            "carscxTheme": {
-                "displayName": "Carscxtheme Plugin",
-                "displayVersion": self._plugin_version,
-                "type": "github_release",
-                "user": "carscx",
-                "repo": "OctoPrint-Carscxtheme",
-                "current": self._plugin_version,
-                "pip": "https://github.com/carscx/OctoPrint-Carscxtheme/archive/{target_version}.zip",
-            }
-        }
+        # Define the configuration for your plugin to use with the Software Update
+        # Plugin here. See https://github.com/foosel/OctoPrint/wiki/Plugin:-Software-Update
+        # for details.
+        return dict(
+            carscxTheme=dict(
+                displayName="CarscxTheme",
+                displayVersion=self._plugin_version,
 
-__plugin_name__ = "Carscxtheme Plugin"
-__plugin_version__ = "1.0.0"
-__plugin_description__ = "A custom theme plugin for OctoPrint"
-__plugin_pythoncompat__ = ">=3,<4"
+                # version check: github repository
+                type="github_release",
+                user="birkbjo",
+                repo="OctoPrint-Carscxtheme",
+                current=self._plugin_version,
+
+                # update method: pip
+                pip="https://github.com/carscx/OctoPrint-Carscxtheme/archive/{target_version}.zip"
+            )
+        )
+
+
+__plugin_name__ = "CarscxTheme"
+__plugin_pythoncompat__ = ">=2.7,<4"
 
 def __plugin_load__():
     global __plugin_implementation__
-    __plugin_implementation__ = CarscxthemePlugin()
+    __plugin_implementation__ = CarscxThemePlugin()
 
     global __plugin_hooks__
     __plugin_hooks__ = {
