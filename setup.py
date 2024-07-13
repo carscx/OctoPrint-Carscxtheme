@@ -2,7 +2,7 @@
 
 plugin_identifier = "carscx"
 
-plugin_package = "octoprint_carscx"
+plugin_package = "octoprint_carscxTheme"
 
 plugin_name = "Carscx"
 
