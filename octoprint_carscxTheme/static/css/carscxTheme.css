@@ -17,3 +17,7 @@ body.carscxTheme {
   background-color: #36393f;
   color: #dadadc;
 }
+
+.carscxTheme h1, .carscxTheme h2, .carscxTheme h3 {
+  font-family: 'Nunito Sans', sans-serif;
+}
