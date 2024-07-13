@@ -8,14 +8,17 @@ $(function() {
     function CarscxthemeViewModel(parameters) {
         var self = this;
 
-        // assign the injected parameters, e.g.:
+        // Assign the injected parameters, e.g.:
         // self.loginStateViewModel = parameters[0];
         // self.settingsViewModel = parameters[1];
+
+        // Add the class 'carscxTheme' to the body element
+        $('body').addClass('carscxTheme');
 
         // TODO: Implement your plugin's view model here.
     }
 
-    /* view model class, parameters for constructor, container to bind to
+    /* View model class, parameters for constructor, container to bind to
      * Please see http://docs.octoprint.org/en/master/plugins/viewmodels.html#registering-custom-viewmodels for more details
      * and a full list of the available options.
      */
